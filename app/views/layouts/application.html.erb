@@ -7,23 +7,73 @@
 	<%= csrf_meta_tags %>
 	<style type="text/css">
 	  html { height: 100% }
-	  body { height: 100%; margin: 0; padding: 0 }
-	  #map_canvas { height: 100% }
+	  body { font-family:arial; height: 100%; margin: 0; padding: 0; background-color:#333; }
+	  #map_canvas { position:absolute; left:200px; right:10px; top:10px; bottom:10px; }
+	  #sidebar { font-size:0.9em; width:200px;  background-color:#333; color:#F4F4F4;}
+	  #sidebar-content { padding:10px; overflow:scroll; position:fixed; height:100%; }
+	
+		ul {
+			list-style:none;
+			
+			margin:0;
+			padding:0;
+		}
+		
+		ul a {
+			display:block;
+			color:#FFF;
+			text-decoration:none;
+			padding:10px;
+			background-color:#444;
+			border-bottom:3px solid #333;
+		}
+		
+		ul a:hover {
+			background-color:#555;
+		}
+		
+		.heading {
+			clear:both;
+			font-weight:bold;
+			display:block;
+		}
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript">
 		$(function() {
 			// hook in with google API
-			var latlng = new google.maps.LatLng(-34.397, 150.644);
+			var latlng = new google.maps.LatLng(49.460817, -2.539000);
 			var myOptions = {
-				zoom: 8,
+				zoom: 12,
 				center: latlng,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		    };
 			
 		    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+			var latLngs = {
+				49.460817 : -2.539000,
+				49.452336 : -2.568526,
+				49.454345 : -2.604404
+			}
 		
-			// now that the map is laoded, let's have fun
+			$.each(latLngs, function(lat, lng) {
+				var point = new google.maps.LatLng(lat, lng);
+				
+				var marker = new google.maps.Marker({
+				      position: point, 
+				      map: map, 
+				      title:"Hello World!"
+				});
+			});
+		
+			$("#recycle_points a").each(function() {
+				var id = $(this).attr("id");
+				
+				
+			});
+			
+			
 		});
 	</script>
 </head>
@@ -31,7 +81,100 @@
 
 <%= yield %>
 
-<div id="map_canvas" style="width:100%; height:100%"></div>
+<div id="sidebar" style="width:200px">
+	<div id="sidebar-content">
+	
+	<ul id="recycle_points">
+		<li>
+			<a href="#">
+				<span class="heading">Cobo</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<span class="picture"><%= image_tag("vazon.jpg") %></span>
+				<span class="heading">Vazon</span>
+				
+				<span class="description">
+					Some description in here.
+				</span>
+			</a>
+		</li>
+	</ul>
+	</div>
+</div>
+
+<div id="map_canvas"></div>
 
 </body>
 </html>
