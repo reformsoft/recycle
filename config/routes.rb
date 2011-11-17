@@ -50,6 +50,7 @@ Recycle::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
   root :to => 'home#index'
+  match '/get_points' => 'home#get_points', :as => :get_points
 
   # See how all your routes lay out with "rake routes"
 

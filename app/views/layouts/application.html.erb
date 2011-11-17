@@ -51,29 +51,31 @@
 			
 		    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-			var latLngs = {
-				49.460817 : -2.539000,
-				49.452336 : -2.568526,
-				49.454345 : -2.604404
-			}
-		
-			$.each(latLngs, function(lat, lng) {
-				var point = new google.maps.LatLng(lat, lng);
-				
-				var marker = new google.maps.Marker({
-				      position: point, 
-				      map: map, 
-				      title:"Hello World!"
-				});
-			});
-		
-			$("#recycle_points a").each(function() {
-				var id = $(this).attr("id");
-				
-				
+			$.ajax({
+				url: "<%= get_points_url %>",
+				type: 'get',
+				dataType: 'json',
+				success: function(data) {
+					$.each(data, function(index, recycle_point) {
+						var point = new google.maps.LatLng(recycle_point.latitude, recycle_point.longitude);
+
+						var marker = new google.maps.Marker({
+						      position: point, 
+						      map: map, 
+						      title:"Hello World!"
+						});
+					});
+				},
+				error: function() {
+					alert("Noooo");
+				}
 			});
 			
-			
+			/*
+				INSERT INTO recycle_points(name, latitude, longitude) VALUES ("test", 49.454345, -2.604404);
+				INSERT INTO recycle_points(name, latitude, longitude) VALUES ("test", 49.452336, -2.568526);
+				INSERT INTO recycle_points(name, latitude, longitude) VALUES ("test", 49.460817, -2.539000);
+			*/
 		});
 	</script>
 </head>
