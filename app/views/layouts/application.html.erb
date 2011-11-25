@@ -14,7 +14,7 @@
 	
 		ul {
 			list-style:none;
-			
+			width:180px;
 			margin:0;
 			padding:0;
 		}
@@ -64,6 +64,8 @@
 						      map: map, 
 						      title:"Hello World!"
 						});
+						
+						createInfoWindow(map, marker, recycle_point);
 					});
 				},
 				error: function() {
@@ -77,6 +79,23 @@
 				INSERT INTO recycle_points(name, latitude, longitude) VALUES ("test", 49.460817, -2.539000);
 			*/
 		});
+		
+		function createInfoWindow(map, marker, recycle_point) {
+			
+			var infowindow = new google.maps.InfoWindow({
+				content: createInfoWindowContent(recycle_point),
+		        size: new google.maps.Size(50,50)
+		    });
+		  
+			google.maps.event.addListener(marker, 'click', function() {
+		    	infowindow.open(map, marker);
+		  	});
+		}
+		
+		function createInfoWindowContent(recycle_point) {
+			return '<h3>' + recycle_point.name + '</h3><br /><br />' +
+				recycle_point.description;
+		}
 	</script>
 </head>
 <body>
@@ -85,94 +104,24 @@
 
 <div id="sidebar" style="width:200px">
 	<div id="sidebar-content">
-	
-	<ul id="recycle_points">
-		<li>
-			<a href="#">
-				<span class="heading">Cobo</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">L'Ancresse</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-		<li>
-			<a href="#">
-				<span class="picture"><%= image_tag("vazon.jpg") %></span>
-				<span class="heading">Vazon</span>
-				
-				<span class="description">
-					Some description in here.
-				</span>
-			</a>
-		</li>
-	</ul>
+		<ul id="recycle_points">
+			<% @recycle_points.each do |recycle_point| %>
+				<li>
+					<a href="#">
+						<span class="picture">
+							<%= image_tag(recycle_point.id.to_s + ".jpg")%>
+						</span>
+						<span class="heading">
+							<%= recycle_point.name %>
+						</span>
+					
+						<span class="description">
+							<%= recycle_point.description %>
+						</span>
+					</a>
+				</li>
+			<% end %>
+		</ul>
 	</div>
 </div>
 
